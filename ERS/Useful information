@@ -1,0 +1,6 @@
+This is the info to access 
+	- jdbc:postgresql://{Your AWS URL}/
+
+
+to keep a session token open when opening new tabs 
+	- use local storage so that sessions can persist

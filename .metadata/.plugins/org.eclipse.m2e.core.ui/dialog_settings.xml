@@ -2,6 +2,10 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\Kevin Tran Huu Lecture Notes\notes\week4\AuthDemo"/>
+			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\"/>
+			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\Kevin Tran Huu Lecture Notes\notes\week3\FrontControllerDemo"/>
+			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\Kevin Tran Huu Lecture Notes\notes\week3\ServletDemo"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\CryptoBank"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\RevCompany\RevaCompany"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\AssignmentsFullTime\Project 1"/>
@@ -64,9 +68,11 @@
 			<item value="com.revature"/>
 		</list>
 		<list key="name">
+			<item value="Employee Reimbursement System"/>
 			<item value="Corner Store"/>
 		</list>
 		<list key="artifactId">
+			<item value="ERS"/>
 			<item value="Shop"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -82,7 +88,21 @@
 		</list>
 	</section>
 	<section name="org.eclipse.m2e.core.pom.overview">
+		<list key="ciManagementUrl">
+		</list>
+		<list key="ciManagementSystem">
+		</list>
+		<list key="issueManagementSystem">
+		</list>
+		<list key="issueManagementUrl">
+		</list>
 	</section>
 	<section name="org.eclipse.m2e.core.pom.dependencies">
+	</section>
+	<section name="org.eclipse.m2e.core.ui.internal.dialogs.MavenRepositorySearchDialog">
+		<item key="width" value="480"/>
+		<item key="height" value="667"/>
+		<item key="x" value="720"/>
+		<item key="y" value="71"/>
 	</section>
 </section>

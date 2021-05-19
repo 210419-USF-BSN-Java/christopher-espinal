@@ -59,7 +59,7 @@ public class ServiceTests {
 		offerDao.delete(offer2);
 	}
 
-	// add item
+	// add item	
 	@Test
 	public void aTest() {
 		Map<String, Object> itemArgs = new HashMap<>();

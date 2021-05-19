@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <!-- http://localhost:8080/ERS/user/login-->
+    <nav>
+        <button type="button" id="logout">Logout</button>
+        <button type="button" id="seeAllEmployees">See All Employees</button>
+        <button type="button" id="pendingReimbursements">Pending Reimbursements</button>
+        <button type="button" id="allReimbursements">All Reimbursements</button>
+    </nav>
+
+    <h1>Manager Dashboard</h1>
+    <div id="mainContainer">
+        <div id="mainContent">
+            <h2>Choose An Option from Above</h2>
+
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById("logout").addEventListener("click", logout);
+        function logout() {
+            alert("logging out");
+        }
+
+        document.getElementById("seeAllEmployees").addEventListener("click", seeAllEmployees);
+        function seeAllEmployees() {
+            let table = document.createElement("table");
+            let tableRow = document.createElement("tr");
+            tableRow.innerHTML = "<th>User Id</th><th>User Name</th><th>User Email</th>";
+            table.appendChild(tableRow);
+            // logic to get the actual values
+            
+            let oldChild = document.getElementById("mainContent");
+            document.getElementById("mainContainer").replaceChild(table, oldChild);
+            table.setAttribute("id", "mainContent");
+        }
+
+        document.getElementById("pendingReimbursements").addEventListener("click", seePendingReims);
+        function seePendingReims() {
+            let table = document.createElement("table");
+            let tableRow = document.createElement("tr");
+            tableRow.innerHTML = "<th>Reim Id</th><th>Reim Description</th><th>Reim Amount</th><th>Reim Type</th>";
+            table.appendChild(tableRow);
+            // logic to get the actual values
+            let oldChild = document.getElementById("mainContent");
+            document.getElementById("mainContainer").replaceChild(table, oldChild);
+            table.setAttribute("id", "mainContent");
+        }
+
+        document.getElementById("allReimbursements").addEventListener("click", seePendingReims);
+        function seePendingReims() {
+            
+            let table = document.createElement("table");
+            let tableRow = document.createElement("tr");
+            tableRow.innerHTML = "<th>Reim Id</th><th>Reim Description</th><th>Reim Amount</th><th>Reim Type</th>";
+            table.appendChild(tableRow);
+            // logic to get the actual values
+            let oldChild = document.getElementById("mainContent");
+            document.getElementById("mainContainer").replaceChild(table, oldChild);
+            table.setAttribute("id", "mainContent");
+        }
+
+    </script>
+</body>
+
+</html>
