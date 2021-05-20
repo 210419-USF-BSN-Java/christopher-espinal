@@ -18,33 +18,40 @@ public class UserServicesImpl implements UserServices {
 	@Override
 	public User getById(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return udao.getById(id);
 	}
 
 	@Override
 	public Integer update(User t) {
 		// TODO Auto-generated method stub
-		return null;
+		return udao.update(t);
 	}
 
 	@Override
 	public Integer delete(User t) {
 		// TODO Auto-generated method stub
-		return null;
+		return udao.delete(t);
 	}
 
+	// mockito test
 	@Override
 	public List<User> getAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return udao.getAll();
 	}
 
+	// mockito test
 	@Override
 	public User loginByEmail(String email, String password) {
 		// TODO Auto-generated method stub
+		User user = udao.getByEmail(email);
+		if (user.getPassword().equals(password)) {
+			return user;
+		}
 		return null;
 	}
 
+	// mockito test
 	@Override
 	public User loginByUsername(String username, String password) {
 		// TODO Auto-generated method stub
@@ -52,14 +59,15 @@ public class UserServicesImpl implements UserServices {
 		if (user != null && user.getPassword().equals(password)) {
 			return user;
 		}
-		
+
 		return null;
 	}
 
+	// mockito test
 	@Override
-	public User updateInformation(User user) {
+	public int updateInformation(User user) {
 		// TODO Auto-generated method stub
-		return null;
+		return udao.update(user);
 	}
 
 }

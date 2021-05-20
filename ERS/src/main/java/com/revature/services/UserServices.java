@@ -7,5 +7,5 @@ public interface UserServices extends GenericServices<User> {
 
 	public User loginByUsername(String username, String password);
 
-	public User updateInformation(User user);
+	public int updateInformation(User user);
 }

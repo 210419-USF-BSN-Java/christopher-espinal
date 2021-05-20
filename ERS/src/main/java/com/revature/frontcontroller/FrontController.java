@@ -31,7 +31,7 @@ public class FrontController extends DefaultServlet {
 //		pw.write("<h1> path: " + path + " </h1>");
 
 		// RequestDispatcher sends a request to the website but starts all over again
-		if (path.startsWith("/static/") || path.equals("") || path.equals("/index.html")) {
+		if (path.startsWith("/static/") || path.equals("") || path.equals("/") || path.equals("/index.html")) {
 //			pw.write("<h1> In the static repo section </h1>");
 			super.doGet(request, response);
 		} else {
