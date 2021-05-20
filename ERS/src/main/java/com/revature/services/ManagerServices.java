@@ -14,8 +14,8 @@ public interface ManagerServices {
 	public List<Reimbursement> viewResolvedReims();
 
 	public byte[] viewReceipt(Reimbursement reim);
-	
+
 	public List<User> viewAllEmployees();
-	
-	public Reimbursement viewEmployeeReims(User employee);
+
+	public List<Reimbursement> viewEmployeeReims(User employee);
 }

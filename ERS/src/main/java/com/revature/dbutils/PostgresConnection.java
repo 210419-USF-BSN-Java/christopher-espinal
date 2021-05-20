@@ -18,9 +18,9 @@ public class PostgresConnection {
 		String JDBC_URL = "jdbc:postgresql://" + RD_HOSTNAME + ":" + 5432 + "/" + DB_NAME + "?user=" + RD_USERNAME
 				+ "&password=" + DB_PASSWORD;
 		try {
-			//Class.forName("org.postgresql.Driver");
+			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(JDBC_URL);
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
