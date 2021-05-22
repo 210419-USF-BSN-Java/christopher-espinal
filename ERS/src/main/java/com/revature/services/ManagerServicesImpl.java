@@ -2,6 +2,7 @@ package com.revature.services;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.logging.LogManager;
 
 import com.revature.dao.DaoFactory;
 import com.revature.dao.ReimbursementDao;
@@ -53,7 +54,10 @@ public class ManagerServicesImpl implements ManagerServices {
 	public List<User> viewAllEmployees() {
 		// TODO Auto-generated method stub
 		List<User> employees = udao.getAll();
+		System.out.println("View all Employees Dao: " + employees);
+
 		employees.removeIf(u -> u.getRole() != Role.EMPLOYEE);
+		System.out.println("View all Employees method: " + employees);
 		return employees;
 	}
 
@@ -61,7 +65,7 @@ public class ManagerServicesImpl implements ManagerServices {
 	public List<Reimbursement> viewEmployeeReims(User employee) {
 		// TODO Auto-generated method stub
 		List<Reimbursement> employeeReims = rdao.getAll();
-		employeeReims.removeIf(reim -> reim.getAuthor().equals(employee));
+		employeeReims.removeIf(reim -> !reim.getAuthor().equals(employee));
 		return employeeReims;
 	}
 

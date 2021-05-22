@@ -3,17 +3,11 @@ package com.revature.frontcontroller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.servlets.DefaultServlet;
-
-import com.revature.maincontrollers.UserController;
-import com.revature.maincontrollers.UserControllerImpl;
-import com.revature.maincontrollers.UserFrontController;
 
 public class FrontController extends DefaultServlet {
 	/**
@@ -27,12 +21,12 @@ public class FrontController extends DefaultServlet {
 		// get the uri and figure out where it's going
 		// context path would be
 		String path = request.getRequestURI().substring(request.getContextPath().length());
-		PrintWriter pw = response.getWriter();
-//		pw.write("<h1> path: " + path + " </h1>");
+		// PrintWriter pw = response.getWriter();
+		// pw.write("<h1> path: " + path + " </h1>");
 
 		// RequestDispatcher sends a request to the website but starts all over again
 		if (path.startsWith("/static/") || path.equals("") || path.equals("/") || path.equals("/index.html")) {
-//			pw.write("<h1> In the static repo section </h1>");
+			// pw.write("<h1> In the static repo section </h1>");
 			super.doGet(request, response);
 		} else {
 			MainRequestHelper.process(request, response);

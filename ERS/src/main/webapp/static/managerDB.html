@@ -52,13 +52,30 @@
 
     <div class="page" id="seeAllEmployees" style="display:none">
         <h3> See All Employees </h3>
-        <table>
+        <table id="allEmployeesTable">
             <tr>
                 <th>Employee Id</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>User Name</th>
+                <th>Email</th>
                 <th>Action</th>
+            </tr>
+            <tr>
+                <td>Mock Row</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td><button id="10000" class="selectEmpBtns">Select</button></td>
+            </tr>
+            <tr>
+                <td>Mock Row</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td><button id="10000" class="selectEmpBtns">Select</button></td>
             </tr>
         </table>
     </div>
@@ -103,8 +120,74 @@
 
         document.getElementById('accountInfoBtn').addEventListener('click', function () { alert("Getting Account Info") })
         document.getElementById('pendingReimsBtn').addEventListener('click', function () { alert("Getting Pending Reimbursements") })
-        document.getElementById('seeAllEmployeesBtn').addEventListener('click', function () { alert("Getting All Employees") })
-        document.getElementById('resolvedReimsBtn').addEventListener('click', function () { alert("Getting All Resolved Reimbursements") })
+
+        document.getElementById('seeAllEmployeesBtn').addEventListener('click', function () {
+            alert("Getting All Employees");
+            let tableBody = document.getElementById('allEmployeesTable').children[0];
+            // select all tr elements besides the first one, iterate and delete each one to refresh
+            // console.log(table.tagName, table.children[0].tagName, table.children[0].children[0].tagName, table.children[0].children[0].children[0].tagName);
+            // console.log(table.children[0].children[0].tagName);
+            let rows = tableBody.children;
+            // console.log(rows);
+            // console.log(rows[0].children[0].tagName);
+            // console.log(rows[1].children[0].tagName);
+            Object.values(rows).forEach((row) => {
+                let check = row.children[0].tagName;
+                // console.log(check);
+                if (check == "TD") {
+                    tableBody.removeChild(row);
+                    // console.log("removed :" + row);
+                };
+
+            })
+            // skip the first row (since it's the heading row)
+
+            let employeeJSON = fetch('http://localhost:8080/ERS/manager/allEmployees', {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+            }).then((response) =>
+                response.json()
+            ).then((data) => {
+                console.log("Data keys: " + Object.keys(data))
+                data.forEach(emp => {
+                    console.log("JSON object keys :" + Object.keys(emp));
+
+                    let row = document.createElement("tr");
+                    let rowData = `<td>${emp.id}</td><td>${emp.first_name}</td><td>${emp.last_name}</td><td>${emp.username}</td><td>${emp.email}</td>`; //<td><button id="${emp.id}" class="selectEmpBtns">Select</button></td>
+                    //                       row.innerHTML = `<td>${i}</td><td>2</td><td>3</td><td>4</td><td>5</td><td><button id="${i}" class="selectEmpsBtn">Select</button></td>`;
+                    row.innerHTML = rowData;
+                    let btn = document.createElement("button");
+                    btn.setAttribute("id", emp.id);
+                    btn.setAttribute("class", "selectEmpBtns");
+                    row.appendChild(btn);
+                    tableBody.appendChild(row);
+                })
+                return document.getElementsByClassName("selectEmpBtns");
+            }).then((btns) => {
+                Object.values(btns).forEach(
+                    btn => btn.addEventListener('click', getEmployee)
+                )
+            }).catch((error) => console.log(error));
+
+            function getEmployee() {
+                openView("employeeReims");
+                let rowId = event.target.id;
+                console.log("emp id: " + rowId);
+
+            };
+
+        });
+
+
+
+        document.getElementById('resolvedReimsBtn').addEventListener('click', function () { alert("Getting All Resolved Reimbursements") });
+
+
+
+
 
     </script>
 </body>

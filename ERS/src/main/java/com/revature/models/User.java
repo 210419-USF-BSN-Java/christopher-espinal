@@ -15,6 +15,20 @@ public class User implements Serializable {
 	private String email;
 	private Role role;
 
+	public User() {
+	}
+
+	public User(Integer id, String username, String password, String first_name, String last_name, String email,
+			Role role) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.email = email;
+		this.role = role;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -154,6 +168,5 @@ public class User implements Serializable {
 		}
 		return true;
 	}
-	
-	
+
 }

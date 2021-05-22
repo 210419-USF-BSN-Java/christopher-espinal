@@ -16,7 +16,7 @@ import com.revature.models.Role;
 import com.revature.models.User;
 
 public class UserDaoImpl implements UserDao {
-//	public static Logger log = LogManager.getRootLogger();
+	// public static Logger log = LogManager.getRootLogger();
 	public static Connection c;
 
 	@Override
@@ -86,17 +86,17 @@ public class UserDaoImpl implements UserDao {
 				user.setLast_name(rs.getString("last_name"));
 				Integer role_id = rs.getInt("role_id");
 				switch (role_id) {
-				case 1:
-					user.setRole(Role.EMPLOYEE);
-					break;
-				case 2:
-					user.setRole(Role.MANAGER);
-					break;
-				case 3:
-					user.setRole(Role.FINANCE_MANAGER);
-					break;
-				default:
-					user.setRole(Role.EMPLOYEE);
+					case 1:
+						user.setRole(Role.EMPLOYEE);
+						break;
+					case 2:
+						user.setRole(Role.MANAGER);
+						break;
+					case 3:
+						user.setRole(Role.FINANCE_MANAGER);
+						break;
+					default:
+						user.setRole(Role.EMPLOYEE);
 				}
 			}
 
@@ -203,17 +203,17 @@ public class UserDaoImpl implements UserDao {
 				user.setLast_name(rs.getString("last_name"));
 				Integer role_id = rs.getInt("role_id");
 				switch (role_id) {
-				case 1:
-					user.setRole(Role.MANAGER);
-					break;
-				case 2:
-					user.setRole(Role.EMPLOYEE);
-					break;
-				case 3:
-					user.setRole(Role.FINANCE_MANAGER);
-					break;
-				default:
-					user.setRole(Role.EMPLOYEE);
+					case 1:
+						user.setRole(Role.EMPLOYEE);
+						break;
+					case 2:
+						user.setRole(Role.MANAGER);
+						break;
+					case 3:
+						user.setRole(Role.FINANCE_MANAGER);
+						break;
+					default:
+						user.setRole(Role.EMPLOYEE);
 				}
 				users.add(user);
 			}
@@ -246,17 +246,17 @@ public class UserDaoImpl implements UserDao {
 				user.setLast_name(rs.getString("last_name"));
 				Integer role_id = rs.getInt("role_id");
 				switch (role_id) {
-				case 1:
-					user.setRole(Role.EMPLOYEE);
-					break;
-				case 2:
-					user.setRole(Role.MANAGER);
-					break;
-				case 3:
-					user.setRole(Role.FINANCE_MANAGER);
-					break;
-				default:
-					user.setRole(Role.EMPLOYEE);
+					case 1:
+						user.setRole(Role.EMPLOYEE);
+						break;
+					case 2:
+						user.setRole(Role.MANAGER);
+						break;
+					case 3:
+						user.setRole(Role.FINANCE_MANAGER);
+						break;
+					default:
+						user.setRole(Role.EMPLOYEE);
 				}
 			}
 
@@ -287,17 +287,17 @@ public class UserDaoImpl implements UserDao {
 				user.setLast_name(rs.getString("last_name"));
 				Integer role_id = rs.getInt("role_id");
 				switch (role_id) {
-				case 1:
-					user.setRole(Role.EMPLOYEE);
-					break;
-				case 2:
-					user.setRole(Role.MANAGER);
-					break;
-				case 3:
-					user.setRole(Role.FINANCE_MANAGER);
-					break;
-				default:
-					user.setRole(Role.EMPLOYEE);
+					case 1:
+						user.setRole(Role.EMPLOYEE);
+						break;
+					case 2:
+						user.setRole(Role.MANAGER);
+						break;
+					case 3:
+						user.setRole(Role.FINANCE_MANAGER);
+						break;
+					default:
+						user.setRole(Role.EMPLOYEE);
 				}
 			}
 

@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\AssignmentsFullTime\ERS"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\Kevin Tran Huu Lecture Notes\notes\week4\AuthDemo"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\Lecture Code\Kevin Tran Huu Lecture Notes\notes\week3\FrontControllerDemo"/>
@@ -22,6 +23,7 @@
 	</section>
 	<section name="MavenProjectWizardLocationPage">
 		<list key="location">
+			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\AssignmentsFullTime\ERS\src\main\java\com\revature\services"/>
 			<item value="C:\Users\Windows 10\OneDrive\Documents\Revature\AssignmentsFullTime\Project 1"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -72,6 +74,7 @@
 			<item value="Corner Store"/>
 		</list>
 		<list key="artifactId">
+			<item value="ERS2"/>
 			<item value="ERS"/>
 			<item value="Shop"/>
 		</list>

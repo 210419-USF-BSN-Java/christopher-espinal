@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-    <typeInfo handle="=ERS/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.revature.maincontrollers{ManagerController.java[ManagerController" modifiers="513" timestamp="1621531994312"/>
-    <typeInfo handle="=ERS/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.revature.services{ManagerServices.java[ManagerServices" modifiers="513" timestamp="1621470395579"/>
-    <typeInfo handle="=ERS/C:\/Users\/Windows 10\/.p2\/pool\/plugins\/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_15.0.1.v20201027-0507\/jre\/lib\/jrt-fs.jar`java.base=/maven.pomderived=/true=/=/javadoc_location=/https:\/\/docs.oracle.com\/en\/java\/javase\/15\/docs\/api\/=/&lt;javax.net.ssl(ManagerFactoryParameters.class[ManagerFactoryParameters" modifiers="1537" timestamp="1603789786000"/>
-</typeInfoHistroy>
+<typeInfoHistroy/>

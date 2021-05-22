@@ -23,7 +23,7 @@ public class MainRequestHelper {
 
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 		PrintWriter pw = response.getWriter();
-//		pw.write("<h1> Reached Main Request Helper </h1>");
+		// pw.write("<h1> Reached Main Request Helper </h1>");
 		// user
 		// session - if there's no session then move to register or login
 		HttpSession session = request.getSession(false);

@@ -20,10 +20,10 @@ public class ManagerFrontController {
 	public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// all of the user requests will go through here
 		String path = request.getRequestURI().substring((request.getContextPath() + "/manager").length());
-		PrintWriter pw = response.getWriter();
-		pw.write("<h1> Reached Manager Front Controller </h1>");
-		pw.write("<h2> Path: " + path + " </h2>");
-		pw.write("<h2> Context Path: " + request.getContextPath() + " </h2>");
+		// PrintWriter pw = response.getWriter();
+		// pw.write("<h1> Reached Manager Front Controller </h1>");
+		// pw.write("<h2> Path: " + path + " </h2>");
+		// pw.write("<h2> Context Path: " + request.getContextPath() + " </h2>");
 
 		// should then send to the user request helper
 		// perhaps can include a if check statement to make other checks
