@@ -25,9 +25,9 @@ public class ViewDelegate extends HttpServlet {
 
 	public void processView(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		PrintWriter pw = response.getWriter();
 		String path = request.getRequestURI().substring(request.getContextPath().length());
-		pw.write("<h2> Current path: " + path + "</h2>");
+		// PrintWriter pw = response.getWriter();
+		// pw.write("<h2> Current path: " + path + "</h2>");
 		if (path.startsWith("/user/login")) {
 			request.getRequestDispatcher("/static/login.html").forward(request, response);
 			return;
@@ -35,7 +35,7 @@ public class ViewDelegate extends HttpServlet {
 			request.getRequestDispatcher("/static/manager.html").forward(request, response);
 			return;
 		} else if (path.startsWith("/employee")) {
-			request.getRequestDispatcher("/static/employeeDB.html").forward(request, response);
+			request.getRequestDispatcher("/static/employee.html").forward(request, response);
 			return;
 		}
 
