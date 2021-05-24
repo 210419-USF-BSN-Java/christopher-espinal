@@ -11,8 +11,10 @@ public interface UserController {
 
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 
-	public void register(HttpServletRequest request, HttpServletResponse response);
+	public void register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 
-	public void seeAccount(HttpServletRequest request, HttpServletResponse response);
+	public void seeAccount(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException;
 
+	public void updateAccount(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
 }

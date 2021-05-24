@@ -9,16 +9,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface ManagerController {
 	// dashboard
-	public void getDashboard(HttpServletRequest request, HttpServletResponse response);
+	public void viewPendingReims(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
-	public void viewPendingReims(HttpServletRequest request, HttpServletResponse response);
+	public void viewResolvedReims(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
-	public void viewResolvedReims(HttpServletRequest request, HttpServletResponse response);
-
-	public void viewReceipts(HttpServletRequest request, HttpServletResponse response);
+	public void viewReceipts(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
 	public void viewEmployeeReims(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
 	public void viewEmployees(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
+	public void acceptReim(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+	public void rejectReim(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

@@ -1,7 +1,6 @@
 package com.revature.maincontrollers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Reimbursement;
 import com.revature.models.Role;
+import com.revature.models.Status;
 import com.revature.models.User;
 import com.revature.services.ManagerServices;
 import com.revature.services.ManagerServicesImpl;
+import com.revature.services.ReimServices;
+import com.revature.services.ReimServicesImpl;
 import com.revature.services.UserServices;
 import com.revature.services.UserServicesImpl;
 
@@ -28,6 +29,7 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 	private static ManagerServices ms = new ManagerServicesImpl();
 	private static UserServices us = new UserServicesImpl();
 	private static ObjectMapper om = new ObjectMapper();
+	private static ReimServices rm = new ReimServicesImpl();
 
 	private ManagerControllerImpl() {
 	}
@@ -37,20 +39,38 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 	}
 
 	@Override
-	public void getDashboard(HttpServletRequest request, HttpServletResponse response) {
+	public void viewPendingReims(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
+		List<Reimbursement> reims = ms.viewPendingReims();
+		if (reims == null) {
+			// pw.write("nada");
+			response.setStatus(404);
+		} else {
+			String json = om.writeValueAsString(reims);
+			response.setStatus(200);
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.getWriter().write(json);
+		}
 
 	}
 
 	@Override
-	public void viewPendingReims(HttpServletRequest request, HttpServletResponse response) {
+	public void viewResolvedReims(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
+		String path = request.getRequestURI().substring((request.getContextPath() + "/manager/resolvedReims").length());
+		// PrintWriter pw = response.getWriter();
+		// pw.write("\nView employee reims method, passed id: " + employeeId + "\n");
 
-	}
-
-	@Override
-	public void viewResolvedReims(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		List<Reimbursement> reims = ms.viewResolvedReims();
+		if (reims == null) {
+			// pw.write("nada");
+			response.setStatus(404);
+		} else {
+			String json = om.writeValueAsString(reims);
+			response.setStatus(200);
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.getWriter().write(json);
+		}
 
 	}
 
@@ -102,6 +122,66 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 			response.getWriter().write(json);
 
 		}
+	}
+
+	@Override
+	public void acceptReim(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+
+		String path = request.getRequestURI().substring((request.getContextPath() + "/manager/acceptReim").length());
+		// PrintWriter pw = response.getWriter();
+		// since the user doesn't explicitly choose the id value, this shouldn't matter
+		Integer reimId = Integer.parseInt(path.substring(1)); // must remove the forward slash
+		// pw.write("\nView employee reims method, passed id: " + employeeId + "\n");
+		System.out.println(reimId);
+		Reimbursement reim = rm.getById(reimId);
+		// need to get the manager's details
+		// String token = request.getHeader("Authentication");
+		// String[] userData = token.split(":");
+		// Integer managerId = Integer.parseInt(userData[0]);
+		// User manager = us.getById(managerId);
+		User manager = us.getById(2);
+
+		int affected = ms.manageReim(reim, manager, Status.APPROVED);
+
+		if (affected > 0) {
+			// pw.write("nada");
+			response.setStatus(200);
+		} else {
+			response.setStatus(400);
+		}
+
+	}
+
+	@Override
+	public void rejectReim(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
+
+		String path = request.getRequestURI().substring((request.getContextPath() + "/manager/rejectReim").length());
+		// PrintWriter pw = response.getWriter();
+		// since the user doesn't explicitly choose the id value, this shouldn't matter
+		Integer reimId = Integer.parseInt(path.substring(1)); // must remove the forward slash
+		// pw.write("\nView employee reims method, passed id: " + employeeId + "\n");
+		System.out.println(reimId);
+		Reimbursement reim = rm.getById(reimId);
+		// need to get the manager's details
+		// String token = request.getHeader("Authentication");
+		// String[] userData = token.split(":");
+
+		// !!!!HARD CODE!!!!
+		// Integer managerId = Integer.parseInt(userData[0]);
+		// User manager = us.getById(managerId);
+		User manager = us.getById(2);
+
+		int affected = ms.manageReim(reim, manager, Status.DENIED);
+
+		if (affected > 0) {
+			// pw.write("nada");
+			response.setStatus(200);
+		} else {
+			response.setStatus(400);
+		}
+
 	}
 
 	private List<User> mockEmployees() {

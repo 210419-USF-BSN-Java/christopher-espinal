@@ -1,6 +1,7 @@
 package com.revature.maincontrollers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ public class ManagerRequestHelper {
 		// will get a URI
 
 		String path = request.getRequestURI().substring((request.getContextPath() + "/manager").length());
-		// PrintWriter pw = response.getWriter();
+		PrintWriter pw = response.getWriter();
 
 		// pw.write("<h1> Reached Manager Helper </h1>");
 		// pw.write("<h2> Path: " + path + " </h2>");
@@ -28,6 +29,7 @@ public class ManagerRequestHelper {
 		// session - if there's no session then move to register or login
 
 		if (path.startsWith("/pendingReims")) {
+			// pw.write("Reached pending reims");
 			mc.viewPendingReims(request, response);
 		} else if (path.startsWith("/resolvedReims")) {
 			mc.viewResolvedReims(request, response);
@@ -36,6 +38,11 @@ public class ManagerRequestHelper {
 		} else if (path.startsWith("/employeeReims")) {
 			// pw.write("Reached Employee reims");
 			mc.viewEmployeeReims(request, response);
+		} else if (path.startsWith("/acceptReim")) {
+			pw.write("Reached accept reims module");
+			mc.acceptReim(request, response);
+		} else if (path.startsWith("/rejectReim")) {
+			mc.rejectReim(request, response);
 		} else {
 			response.setStatus(404);
 		}

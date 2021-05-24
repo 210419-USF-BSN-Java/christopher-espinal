@@ -32,7 +32,7 @@ public class ViewDelegate extends HttpServlet {
 			request.getRequestDispatcher("/static/login.html").forward(request, response);
 			return;
 		} else if (path.startsWith("/manager")) {
-			request.getRequestDispatcher("/static/managerOld.html").forward(request, response);
+			request.getRequestDispatcher("/static/manager.html").forward(request, response);
 			return;
 		} else if (path.startsWith("/employee")) {
 			request.getRequestDispatcher("/static/employeeDB.html").forward(request, response);

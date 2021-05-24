@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="com.revature.dao.ReimDaoTest" time="1.892" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="com.revature.dao.ReimDaoTest" time="2" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jre1.8.0_271\bin"/>
@@ -65,10 +65,10 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.revature.dao.ReimDaoTest" name="aTest" time="0.238"/>
-  <testcase classname="com.revature.dao.ReimDaoTest" name="bTest" time="0.226"/>
-  <testcase classname="com.revature.dao.ReimDaoTest" name="baTest" time="0.46"/>
-  <testcase classname="com.revature.dao.ReimDaoTest" name="cTest" time="0.239"/>
-  <testcase classname="com.revature.dao.ReimDaoTest" name="caTest" time="0.238"/>
-  <testcase classname="com.revature.dao.ReimDaoTest" name="dTest" time="0.491"/>
+  <testcase classname="com.revature.dao.ReimDaoTest" name="aTest" time="0.295"/>
+  <testcase classname="com.revature.dao.ReimDaoTest" name="bTest" time="0.225"/>
+  <testcase classname="com.revature.dao.ReimDaoTest" name="baTest" time="0.477"/>
+  <testcase classname="com.revature.dao.ReimDaoTest" name="cTest" time="0.234"/>
+  <testcase classname="com.revature.dao.ReimDaoTest" name="caTest" time="0.253"/>
+  <testcase classname="com.revature.dao.ReimDaoTest" name="dTest" time="0.516"/>
 </testsuite>

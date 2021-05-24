@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.revature.maincontrollers.EmployeeFrontController;
 import com.revature.maincontrollers.ManagerFrontController;
 import com.revature.maincontrollers.UserFrontController;
 
@@ -41,9 +42,11 @@ public class MainRequestHelper {
 			// i want to redirect this login
 			UserFrontController.process(request, response);
 		} else if (path.startsWith("/employee")) {
-			pw.write("<h2> Reached Employee Dashboard </h2>");
+			EmployeeFrontController.getInstance().process(request, response);
 		} else if (path.startsWith("/manager")) {
 			ManagerFrontController.getInstance().process(request, response);
+		} else {
+			response.setStatus(404);
 		}
 
 	}

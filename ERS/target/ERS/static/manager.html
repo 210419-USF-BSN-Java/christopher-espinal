@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Manager Page</title>
+</head>
+
+<body>
+
+    <!-- http://localhost:8080/ERS/user/login-->
+    <nav class="buttons">
+        <button type="button" onclick="alert('Logged Out')" id="logout">Logout</button>
+        <button type="button" onclick="openView('accountInfo')" id="accountInfoBtn">Account Info</button>
+        <button type="button" onclick="openView('pendingReims')" id="pendingReimsBtn">Pending Reimbursements</button>
+        <button type="button" onclick="openView('seeAllEmployees')" id="seeAllEmployeesBtn">See All Employees</button>
+        <button type="button" onclick="openView('resolvedReims')" id="resolvedReimsBtn">All Resolved
+            Reimbursement</button>
+    </nav>
+
+    <h1>Manager Dashboard</h1>
+
+    <div class="page" id="accountInfo" style="display:none">
+        <h3> Manager Account Info </h3>
+        <ul>
+            <li><label for="firstname">First Name:
+                </label>
+                <div id="firstname"></div>
+            </li>
+            <li><label for="lastname">Last Name:
+                </label>
+                <div id="lastname"></div>
+            </li>
+            <li><label for="username">User Name:
+                </label>
+                <div id="username"></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="page" id="pendingReims" style="display:block">
+        <h3> See All Pending Reimbursement Requests </h3>
+        <table>
+            <tr>
+                <th>Reim Id</th>
+                <th>Reim Description</th>
+                <th>Reim Amount</th>
+                <th>Reim Type</th>
+                <th>Employee</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="page" id="seeAllEmployees" style="display:none">
+        <h3> See All Employees </h3>
+        <table id="allEmployeesTable">
+            <tr>
+                <th>Employee Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>Mock Row</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td><button id="10000" class="selectEmpBtns">Select</button></td>
+            </tr>
+            <tr>
+                <td>Mock Row</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td><button id="10000" class="selectEmpBtns">Select</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- button for this in seeAllEmployees! -->
+    <div class="page" id="employeeReims" style="display:none">
+        <h3> See Specific Employee Reimbursement Requests </h3>
+        <table id="employeeReimsTable">
+            <tr>
+                <th>Reim Id</th>
+                <th>Reim Description</th>
+                <th>Reim Amount</th>
+                <th>Reim Type</th>
+                <th>Employee</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="page" id="resolvedReims" style="display:none">
+        <h3> See All Pending Reimbursement Requests </h3>
+        <table>
+            <tr>
+                <th>Reim Id</th>
+                <th>Reim Description</th>
+                <th>Reim Amount</th>
+                <th>Reim Type</th>
+                <th>Employee</th>
+            </tr>
+        </table>
+    </div>
+
+
+    <script src="static/manager.js">
+        function openView(view) {
+            let views = document.getElementsByClassName('page');
+            let len = views.length;
+            for (let index = 0; index < len; index++) {
+                views[index].style.display = "none";
+            }
+
+            document.getElementById(view).style.display = "block";
+        }
+
+        document.getElementById('accountInfoBtn').addEventListener('click', function () { alert("Getting Account Info") })
+
+
+        document.getElementById('pendingReimsBtn').addEventListener('click', function () {
+            alert("Getting Pending Reimbursements");
+            let tableBody = getAndCleanTableBody("pendingReims");
+
+            let url = 'http://localhost:8080/ERS/manager/pendingReims';
+
+            let buttonsClassName = getDataAndPopulateTable(
+                url,
+                tableBody,
+                "pendingReim",
+                "accept",
+                accept,
+                true,
+                "reject",
+                reject
+            );
+
+            /*     url,
+                tableBody,
+                itemName,
+                action,
+                btnCallable,
+                secondButton = false,
+                action2 = "",
+                secondBtnCallable = ""
+             */
+
+        })
+
+
+        function accept() {
+            let token = sessionStorage.getItem("token");
+            alert("accepted" + token);
+            let id = event.target.id;
+            let url = "http://localhost:8080/ERS/manager/acceptReim/" + id;
+            let status = fetch(url, {
+
+                method: "GET",
+                mode: "cors",
+                header: {
+                    "Authentication": sessionStorage.getItem("token"),
+                }
+            }).then((response) => {
+
+                return response.status;
+
+            }).catch((error) => console.log(error));
+            return status;
+        }
+
+        function reject() {
+            alert("Rejected");
+        }
+
+
+        document.getElementById('seeAllEmployeesBtn').addEventListener('click', function () {
+            let tableBody = getAndCleanTableBody("allEmployeesTable");
+
+            let url = 'http://localhost:8080/ERS/manager/allEmployees';
+
+            let employeeBtns = getDataAndPopulateTable(
+                url,
+                tableBody,
+                "employee",
+                "See Details",
+                getEmployeeItem,
+            );
+            /*     url,
+                    tableBody,
+                    itemName,
+                    action,
+                    btnCallable,
+                    secondButton = false,
+                    action2 = "",
+                    secondBtnCallable = ""
+                 */
+        });
+
+        // used as a callable
+        function getEmployeeItem() {
+            openView("employeeReims");
+            let tableBody = getAndCleanTableBody("employeeReimsTable");
+
+            let rowId = event.target.id;
+            console.log("emp id: " + rowId);
+
+            let url = 'http://localhost:8080/ERS/manager/employeeReims/' + rowId;
+
+            let empReimBtns = getDataAndPopulateTable(
+                url,
+                tableBody,
+                "empReim",
+                "accept",
+                accept,
+                true,
+                "reject",
+                reject,
+            );
+
+            /*     url,
+                tableBody,
+                itemName,
+                action,
+                btnCallable,
+                secondButton = false,
+                action2 = "",
+                secondBtnCallable = ""
+             */
+
+        };
+
+        function getAndCleanTableBody(tableId) {
+            // alert("Getting All Employees");
+            let tableBody = document.getElementById(tableId).children[0];
+            // select all tr elements besides the first one, iterate and delete each one to refresh
+            // console.log(table.tagName, table.children[0].tagName, table.children[0].children[0].tagName, table.children[0].children[0].children[0].tagName);
+            // console.log(table.children[0].children[0].tagName);
+            let rows = tableBody.children;
+            // console.log(rows);
+            // console.log(rows[0].children[0].tagName);
+            // console.log(rows[1].children[0].tagName);
+            Object.values(rows).forEach((row) => {
+                // let check = row.children[0].tagName;
+                // // console.log(check);
+                // if (check == "TD") {
+                tableBody.removeChild(row);
+                // console.log("removed :" + row);
+                // };
+            })
+
+            return tableBody;
+        }
+
+        // also returns buttons with information
+        function getDataAndPopulateTable(url,
+            tableBody,
+            itemName,
+            action,
+            btnCallable,
+            secondButton = false,
+            action2 = "",
+            secondButtonCallable = "",
+        ) {
+            let itemBtns = fetch(url, {
+
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                },
+
+            }).then((response) => {
+
+                console.log(response);
+                return response.json();
+
+            }).then((data) => {
+
+                console.log("reached second then statement");
+                let itemBtnsClassName = populateTable(
+                    data,
+                    tableBody,
+                    itemName,
+                    action,
+                    btnCallable,
+                    secondButton,
+                    action2,
+                    secondButtonCallable
+                );
+
+                return itemBtnsClassName;
+
+            }).catch((error) => console.log(error));
+            return itemBtns;
+        }
+
+        // data should be Object Array format such as JSON
+        // and gets item buttons class name for later use 
+        function populateTable(
+            data,
+            tableBody,
+            itemName,
+            action,
+            btnCallable,
+            secondButton = false,
+            action2 = "",
+            secondButtonCallable = ""
+        ) {
+            let itemBtnsClassName = "";
+
+            console.log("Data keys: " + Object.keys(data))
+            let obj = data[0];
+            // create a header row
+            let genericRow = document.createElement("tr");
+            Object.keys(obj).forEach(colName => {
+                // add a column to each row with obj keys
+                let genericCol = document.createElement("th");
+                genericCol.innerHTML = colName;
+                genericRow.appendChild(genericCol);
+            })
+            // an additional col for future buttons
+            let btnCol = document.createElement("th");
+            btnCol.innerHTML = "Action";
+            genericRow.appendChild(btnCol);
+
+            // in case there are two buttons needed
+            if (secondButton) {
+                let btnCol2 = document.createElement("th");
+                btnCol2.innerHTML = "Action";
+                genericRow.appendChild(btnCol2);
+            }
+
+            tableBody.appendChild(genericRow);
+
+
+            // creates a row of data and a button for submission purposes
+            data.forEach(rowData => {
+                console.log("JSON object keys :" + Object.values(rowData));
+
+                let row = document.createElement("tr");
+                // grab individual cells of data and place them in the table
+                Object.values(rowData).forEach(cellData => {
+                    console.log("Cell Data: " + cellData);
+                    let cell = document.createElement("td");
+                    cell.innerHTML = cellData;
+                    row.appendChild(cell);
+                })
+
+                // first button
+                let btnCell = document.createElement("td");
+                let btn = document.createElement("button");
+                btn.setAttribute("id", rowData.id);
+
+                itemBtnsClassName = `${action}${itemName}Btns`;
+
+                btn.setAttribute("class", itemBtnsClassName);
+                btn.innerHTML = "Select";
+
+                btn.addEventListener('click', btnCallable);
+                btnCell.appendChild(btn);
+                row.appendChild(btnCell);
+
+                // incase second button is needed
+                if (secondButton) {
+                    let btnCell2 = document.createElement("td");
+                    let btn2 = document.createElement("button");
+
+                    btn2.setAttribute("id", rowData.id);
+                    itemBtnsClassName2 = `${action2}${itemName}Btns`;
+
+                    btn2.setAttribute("class", itemBtnsClassName2);
+                    btn2.innerHTML = action2;
+                    btn2.addEventListener('click', secondButtonCallable);
+                    btnCell2.appendChild(btn2);
+                    row.appendChild(btnCell2);
+                }
+                tableBody.appendChild(row);
+            })
+            return itemBtnsClassName;
+        }
+
+
+        document.getElementById('resolvedReimsBtn').addEventListener('click', function () { alert("Getting All Resolved Reimbursements") });
+
+    </script>
+</body>
+
+</html>
