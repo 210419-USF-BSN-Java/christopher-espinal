@@ -29,7 +29,7 @@ public class UserRequestHelper {
 			UserControllerImpl.getInstance().login(request, response);
 
 		} else if (path.startsWith("/logout")) {
-			// pw.write("<h2> Going to Logout Page </h2>");
+			System.out.println("reached logout page");
 			UserControllerImpl.getInstance().logout(request, response);
 
 		} else if (path.startsWith("/register")) {

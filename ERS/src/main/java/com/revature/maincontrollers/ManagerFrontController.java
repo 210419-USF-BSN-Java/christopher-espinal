@@ -1,11 +1,11 @@
 package com.revature.maincontrollers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ManagerFrontController {
 	private static ManagerFrontController mfc = new ManagerFrontController();
@@ -27,6 +27,7 @@ public class ManagerFrontController {
 
 		// should then send to the user request helper
 		// perhaps can include a if check statement to make other checks
+		
 		if (path.equals("") || path.equals("/")) {
 			ViewDelegate.getInstance().processView(request, response);
 		} else {

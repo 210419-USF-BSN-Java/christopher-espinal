@@ -24,6 +24,29 @@ document.getElementById('pendingReimsBtn').addEventListener('click', pendingReim
 
 document.getElementById('resolvedReimsBtn').addEventListener('click', resolvedReimsView);
 
+document.getElementById('logout').addEventListener('click', (event) => logout(event));
+
+function logout(event) {
+    event.preventDefault();
+    alert("Logging Out");
+    let url = "http://localhost:8080/ERS/user/logout";
+
+    let response = fetch(
+        url,
+        {
+            method: "POST",
+            headers: {
+                "mode": "core",
+            },
+        }
+    ).then((response) => {
+        if ((response.status < 300) && (response.status >= 200)) {
+            console.log("logged out!!");
+            window.location.href = "http://localhost:8080/ERS/user/login";
+        }
+    }
+    ).catch(e => console.error(e))
+}
 
 function submitReim(event) {
 
@@ -71,7 +94,7 @@ function verifyAndUpdate(event) {
     }
 }
 
-function submitPasswordUpdate(event){
+function submitPasswordUpdate(event) {
     let formId = event.target.id;
     let form = document.getElementById(formId);
 

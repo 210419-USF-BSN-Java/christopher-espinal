@@ -10,9 +10,31 @@ function openView(view) {
 
 document.getElementById('accountInfoBtn').addEventListener('click', function () { alert("Getting Account Info") })
 
-
 document.getElementById('pendingReimsBtn').addEventListener('click', pendingReimsView);
 
+document.getElementById('logout').addEventListener('click', (event) => logout(event));
+
+function logout(event) {
+    event.preventDefault();
+    alert("Logging Out");
+    let url = "http://localhost:8080/ERS/user/logout";
+
+    let response = fetch(
+        url,
+        {
+            method: "POST",
+            headers: {
+                "mode": "core",
+            },
+        }
+    ).then((response) => {
+        if ((response.status < 300) && (response.status >= 200)) {
+            console.log("logged out!!");
+            window.location.href = "http://localhost:8080/ERS/user/login";
+        }
+    }
+    ).catch(e => console.error(e))
+}
 
 function pendingReimsView() {
     alert("Getting Pending Reimbursements");

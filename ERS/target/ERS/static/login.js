@@ -1,7 +1,10 @@
-document.getElementById("loginBtn").addEventListener("click", fetchLogin);
+document.getElementById("loginForm").addEventListener("submit", (event) => fetchLogin(event));
 
-function fetchLogin() {
+function fetchLogin(event) {
+    event.preventDefault();
+    alert("Welcome to the Login Page!");
     console.log("Reached Beginning of Fetch Login");
+    // console.log(obj);
     let form = document.getElementById("loginForm")
     let _user = {
         "username": form.elements['username'].value,
@@ -13,11 +16,17 @@ function fetchLogin() {
     let response = fetch(url, {
         method: "POST",
         body: JSON.stringify(_user),
-        mode: "no-cors",
         headers: {
-            "Content-Type": "application/json",
+            mode: "cors",
         }
-    }).then(response => console.log(response.status)).catch(e => log.error(e));
+    }).then((response) => {
+        if ((response.status < 300) && (response.status >= 200)) {
+            console.log("logged in!!");
+            window.location.href = "http://localhost:8080/ERS/manager";
+        } else {
+            document.getElementById("message").innerHTML = "Please Try Again!";
+        }
+    }).catch(e => log.error(e));
 
 
 }

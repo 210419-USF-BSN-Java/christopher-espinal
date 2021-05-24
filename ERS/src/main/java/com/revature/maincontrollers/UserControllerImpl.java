@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.frontcontroller.FrontController;
 import com.revature.models.User;
 import com.revature.models.UserLogger;
 import com.revature.services.UserServices;
@@ -54,7 +55,7 @@ public class UserControllerImpl implements UserController {
 					reader.close();
 				}
 
-				System.out.println("StringBuilder data: " + sb.toString());
+				System.out.println("StringBuilder data: " + sb);
 				ObjectMapper om = new ObjectMapper();
 				UserLogger ul = om.readValue(sb.toString(), UserLogger.class);
 				// HARDCODED
@@ -65,7 +66,7 @@ public class UserControllerImpl implements UserController {
 					HttpSession session = request.getSession();
 					session.setAttribute("role", user.getRole().toString());
 					System.out.println(session.getCreationTime());
-					
+
 					response.setStatus(200);
 				} else {
 					// pw.write("<h1> Sorry, but we couldn't log you in </h1>");
@@ -82,13 +83,21 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		String method = request.getMethod();
-		PrintWriter pw = response.getWriter();
-
-		HttpSession session = request.getSession(false);
-		session.invalidate();
-		response.sendRedirect("/user/login");
+		// // TODO Auto-generated method stub
+		// String method = request.getMethod();
+		// PrintWriter pw = response.getWriter();
+		System.out.println("Logout - Received request");
+		if (request.getMethod().equals("POST")) {
+			try {
+				HttpSession session = request.getSession(false);
+				session.invalidate();
+				response.setStatus(200);
+			} catch (NullPointerException e) {
+				System.out.println("logout - no session");
+			} finally {
+				response.setStatus(200);
+			}
+		}
 	}
 
 	@Override
