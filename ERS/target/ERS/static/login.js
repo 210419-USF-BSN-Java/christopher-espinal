@@ -1,28 +1,33 @@
-document.getElementById("login-btn").addEventListener("click", requestLogin);
-function requestLogin() {
+document.getElementById("loginBtn").addEventListener("click", fetchLogin);
 
-	let user = document.getElementById("username").value;
-	let pass = document.getElementById("password").value;
+function fetchLogin() {
+    console.log("Reached Beginning of Fetch Login");
+    let form = document.getElementById("loginForm")
+    let _user = {
+        "username": form.elements['username'].value,
+        "password": form.elements['password'].value,
+    }
 
-	let xhr = new XMLHttpRequest();
-	let url = "http://localhost:8080/ERS/user/login";
-	xhr.open("POST", url);
+    let url = "http://localhost:8080/ERS/user/login";
 
-	xhr.onreadystatechange = function () {
-		console.log("On Ready State Change is being executed");
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			let auth = xhr.getResponseHeader("Authentication");
+    let response = fetch(url, {
+        method: "POST",
+        body: JSON.stringify(_user),
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }).then(response => console.log(response.status)).catch(e => log.error(e));
 
-			let token = sessionStorage.setItem("token", auth);
-			console.log(token);
-			window.location.href = "http://localhost:8080/ERS/manager"
-		}
-		else if (xhr.readyState == 4) {
-			document.getElementById('message').innerHTML = 'Incorrect credentials!';
-		}
-	}
 
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	let requestBody = `username=${user}&password=${pass}`;
-	xhr.send(requestBody);
 }
+
+
+
+/*     {
+        console.log("Getting a response");
+        if (response.status >= 200 && response.status < 400) {
+            window.location.href = "http://localhost:8080/ERS";
+        } else {
+            document.getElementById("message").innerHTML = "Login Unsuccessful";
+        } */

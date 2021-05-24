@@ -11,7 +11,10 @@ function openView(view) {
 document.getElementById('accountInfoBtn').addEventListener('click', function () { alert("Getting Account Info") })
 
 
-document.getElementById('pendingReimsBtn').addEventListener('click', function () {
+document.getElementById('pendingReimsBtn').addEventListener('click', pendingReimsView);
+
+
+function pendingReimsView() {
     alert("Getting Pending Reimbursements");
     let tableBody = getAndCleanTableBody("pendingReims");
 
@@ -38,9 +41,9 @@ document.getElementById('pendingReimsBtn').addEventListener('click', function ()
         secondBtnCallable = ""
      */
 
-})
+}
 
-
+// when figure out CORS issues and token issue, can send token here as well
 function accept() {
     alert("accepted");
     let id = event.target.id;
@@ -49,20 +52,29 @@ function accept() {
 
         method: "GET",
         mode: "cors",
-        // headers: {
-        //     "Authentication": sessionStorage.getItem("token"),
-        // }
 
     }).then((response) => {
-
-        return response.status;
-
+        console.log(response.status);
+        return pendingReimsView();
     }).catch((error) => console.log(error));
     return status;
 }
 
 function reject() {
-    alert("Rejected");
+    alert("rejected");
+    let id = event.target.id;
+    let url = "http://localhost:8080/ERS/manager/rejectReim/" + id;
+    let status = fetch(url, {
+
+        method: "GET",
+        mode: "cors",
+
+    }).then((response) => {
+        console.log(response.status);
+        return pendingReimsView();
+    }
+    ).catch((error) => console.log(error));
+    return status;
 }
 
 
@@ -122,6 +134,30 @@ function getEmployeeItem() {
 
 };
 
+document.getElementById('resolvedReimsBtn').addEventListener('click', function () {
+    let tableBody = getAndCleanTableBody("resolvedReimsTable");
+
+    let url = 'http://localhost:8080/ERS/manager/resolvedReims';
+
+    let employeeBtns = getDataAndPopulateTable(
+        url,
+        tableBody,
+        "resolvedReim", // item anem
+        "Cool!", // action name in string
+        function () { alert("Cool!") }, // btn callable
+    );
+    /*     url,
+            tableBody,
+            itemName,
+            action,
+            btnCallable,
+            secondButton = false,
+            action2 = "",
+            secondBtnCallable = ""
+         */
+});
+
+// step 1
 function getAndCleanTableBody(tableId) {
     // alert("Getting All Employees");
     let tableBody = document.getElementById(tableId).children[0];
@@ -144,6 +180,7 @@ function getAndCleanTableBody(tableId) {
     return tableBody;
 }
 
+// step 2
 // also returns buttons with information
 function getDataAndPopulateTable(url,
     tableBody,
@@ -160,7 +197,6 @@ function getDataAndPopulateTable(url,
         mode: "cors",
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            "Authentication": sessionStorage.getItem("token"),
         },
 
     }).then((response) => {
@@ -188,6 +224,7 @@ function getDataAndPopulateTable(url,
     return itemBtns;
 }
 
+// used by the above function - no need to access directly - should I "encapsulate/hide"
 // data should be Object Array format such as JSON
 // and gets item buttons class name for later use 
 function populateTable(
@@ -272,6 +309,3 @@ function populateTable(
     })
     return itemBtnsClassName;
 }
-
-
-document.getElementById('resolvedReimsBtn').addEventListener('click', function () { alert("Getting All Resolved Reimbursements") });

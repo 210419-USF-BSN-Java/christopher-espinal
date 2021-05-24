@@ -16,5 +16,5 @@ public interface UserController {
 	public void seeAccount(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException;
 
-	public void updateAccount(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+	public void updateAccount(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 }
