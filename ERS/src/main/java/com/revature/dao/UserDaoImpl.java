@@ -12,8 +12,11 @@ import com.revature.dbutils.PostgresConnection;
 import com.revature.models.Role;
 import com.revature.models.User;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class UserDaoImpl implements UserDao {
-	// public static Logger log = LogManager.getRootLogger();
+	public static Logger log = LogManager.getRootLogger();
 	public static Connection c;
 
 	@Override
@@ -190,7 +193,7 @@ public class UserDaoImpl implements UserDao {
 			c = PostgresConnection.getConnection();
 			PreparedStatement ps = c.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				User user = new User();
 				user.setId(rs.getInt("id"));
 				user.setUsername(rs.getString("username"));
@@ -213,6 +216,7 @@ public class UserDaoImpl implements UserDao {
 						user.setRole(Role.EMPLOYEE);
 				}
 				users.add(user);
+				log.debug(user);
 			}
 
 		} catch (SQLException e) {

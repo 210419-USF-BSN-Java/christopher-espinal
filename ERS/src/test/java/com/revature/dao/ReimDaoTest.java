@@ -1,11 +1,14 @@
 package com.revature.dao;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.revature.models.ReimType;
+import com.revature.models.Reimbursement;
+import com.revature.models.Status;
+import com.revature.models.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,18 +18,9 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.revature.dao.DaoFactory;
-import com.revature.dao.ReimbursementDao;
-import com.revature.dao.UserDao;
-import com.revature.models.ReimType;
-import com.revature.models.Reimbursement;
-import com.revature.models.Status;
-import com.revature.models.User;
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReimDaoTest {
 	private static Logger log = LogManager.getRootLogger();
-	private static DaoFactory daoF;
 	private static UserDao uDao;
 	private static User employee, manager;
 	private static ReimbursementDao rDao;
@@ -35,8 +29,8 @@ public class ReimDaoTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		uDao = daoF.getDaoFactory().getUserDaoImpl();
-		rDao = daoF.getDaoFactory().getReimDaoImpl();
+		uDao = DaoFactory.getDaoFactory().getUserDaoImpl();
+		rDao = DaoFactory.getDaoFactory().getReimDaoImpl();
 		employee = uDao.getById(1);
 		manager = uDao.getById(2);
 		reim = new Reimbursement();
@@ -63,18 +57,6 @@ public class ReimDaoTest {
 	@Test
 	public void bTest() {
 		reim2 = rDao.getById(reim.getId());
-		log.debug("reim 1: " + reim.toString());
-		log.debug("reim 2: " + reim2.toString());
-		log.debug("Author 1: " + reim.getAuthor().toString());
-		log.debug("Author 2: " + reim2.getAuthor().toString());
-		log.debug("Author 1: " + reim.getAuthor().getPassword());
-		log.debug("Author 2: " + reim2.getAuthor().getPassword());
-		log.debug("Author 1: " + reim.getAuthor().getId());
-		log.debug("Author 2: " + reim2.getAuthor().getId());
-		log.debug("Author 1: " + reim.getAuthor().getUsername());
-		log.debug("Author 2: " + reim2.getAuthor().getUsername());
-		log.debug(reim.getAuthor().equals(reim2.getAuthor()));
-
 		assertEquals(reim.getAuthor(), reim2.getAuthor());
 	}
 
@@ -88,7 +70,7 @@ public class ReimDaoTest {
 		reim2 = rDao.add(reim2);
 
 		List<Reimbursement> actual = rDao.getAll();
-		actual.stream().forEach(a -> log.debug("getAll() test - " + a));
+		// actual.stream().forEach(a -> log.debug("getAll() test - " + a));
 		assertTrue(actual.size() > 0);
 	}
 

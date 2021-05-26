@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.frontcontroller.FrontController;
 import com.revature.models.User;
-import com.revature.models.UserLogger;
 import com.revature.services.UserServices;
 import com.revature.services.UserServicesImpl;
 
@@ -43,33 +41,51 @@ public class UserControllerImpl implements UserController {
 				break;
 
 			case "POST":
-				// pw.write("<h1> Logging you in! </h1>");
-				StringBuilder sb = new StringBuilder();
-				BufferedReader reader = request.getReader();
-				try {
-					String line;
-					while ((line = reader.readLine()) != null) {
-						sb.append(line).append('\n');
-					}
-				} finally {
-					reader.close();
-				}
+				/*
+				 * StringBuilder sb = new StringBuilder(); BufferedReader reader =
+				 * request.getReader(); try { String line; while ((line = reader.readLine()) !=
+				 * null) { sb.append(line).append('\n'); } } finally { reader.close(); }
+				 * 
+				 * System.out.println("StringBuilder data: " + sb); ObjectMapper om = new
+				 * ObjectMapper(); UserLogger ul = om.readValue(sb.toString(),
+				 * UserLogger.class);
+				 * 
+				 * System.out.println("username: " + ul.getUsername() + ": password: " +
+				 * ul.getPassword()); String username = ul.getUsername(); String password =
+				 * ul.getPassword();
+				 * 
+				 * User user = us.loginByUsername(username, password);
+				 */
 
-				System.out.println("StringBuilder data: " + sb);
-				ObjectMapper om = new ObjectMapper();
-				UserLogger ul = om.readValue(sb.toString(), UserLogger.class);
-				// HARDCODED
-				User user = us.loginByUsername(ul.getUsername(), ul.getPassword());
-				System.out.println(user);
+				System.out.println("LATEST SYSTEM UPDATE - USER CONTROLLER IMPL");
+
+				HttpSession session = request.getSession(false);
+				String username = request.getParameter("username");
+				String password = request.getParameter("password");
+
+				// System.out.println("username: " + username + ": password: " + password);
+				User user = us.loginByUsername(username, password);
 
 				if (user != null) {
-					HttpSession session = request.getSession();
+					session = request.getSession();
 					session.setAttribute("role", user.getRole().toString());
-					System.out.println(session.getCreationTime());
-
+					session.setAttribute("user", user);
 					response.setStatus(200);
+
+					String role = (String) session.getAttribute("role");
+					switch (role) {
+						case "MANAGER":
+							response.sendRedirect("/ERS/manager");
+							break;
+						case "EMPLOYEE":
+							response.sendRedirect("/ERS/employee");
+							break;
+						default:
+							System.out.println("NEWEST SYSTEM UPDATE - NON USER REDIRECT");
+							response.sendRedirect("/ERS");
+							break;
+					}
 				} else {
-					// pw.write("<h1> Sorry, but we couldn't log you in </h1>");
 					response.setStatus(401);
 				}
 				break;
@@ -83,19 +99,14 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// // TODO Auto-generated method stub
-		// String method = request.getMethod();
-		// PrintWriter pw = response.getWriter();
-		System.out.println("Logout - Received request");
 		if (request.getMethod().equals("POST")) {
 			try {
 				HttpSession session = request.getSession(false);
 				session.invalidate();
-				response.setStatus(200);
 			} catch (NullPointerException e) {
-				System.out.println("logout - no session");
 			} finally {
 				response.setStatus(200);
+				response.sendRedirect("http://localhost:8080/ERS/user/login");
 			}
 		}
 	}
@@ -109,16 +120,12 @@ public class UserControllerImpl implements UserController {
 	@Override
 	public void seeAccount(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		String path = request.getRequestURI().substring((request.getContextPath() + "/user/account/").length());
-		System.out.println(path);
-		Integer id = Integer.parseInt(path);
-		User user = us.getById(id);
+		User user = us.getById(((User) request.getSession().getAttribute("user")).getId());
 		if (user == null) {
 			response.setStatus(404);
-		} else {
+		} else { // POOR CODING QUALITY
 			List<User> fakeArray = new ArrayList<>(); // not for iteration. Just for compatibility with JS Function
-														// which expects a list
+													// which expects a list
 			fakeArray.add(user);
 			String json = om.writeValueAsString(fakeArray);
 			response.getWriter().write(json);
@@ -126,7 +133,7 @@ public class UserControllerImpl implements UserController {
 
 	}
 
-	@Override
+	@Override // HARDCODED - FIXED
 	public void updateAccount(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
@@ -140,8 +147,7 @@ public class UserControllerImpl implements UserController {
 			reader.close();
 		}
 
-		// HARDCODED
-		User employee = us.getById(1);
+		User employee = us.getById(((User) request.getSession().getAttribute("user")).getId());
 
 		User userJSON = om.readValue(sb.toString(), User.class);
 

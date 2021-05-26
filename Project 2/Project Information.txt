@@ -1,0 +1,77 @@
+The Git Flow:
+URL: 
+
+- Setup the repo
+- Teresa and Andrew will determine the flow
+and the pipeline
+- Andrew will watch the merge requests
+
+Project:
+
+- Team Name: 
+	- The Interesting Times Gang
+	- The ITG
+
+- Team Lead (SCRUM Master): 
+	- Teresa: Andrew
+	- Andrew: Andrew
+	- Chris: Andrew
+	- Uriah: Andrew
+- Note taker (Chris):
+	- takes notes on each meeting
+	- standup notes
+- Separate Front-end back-end Leads?
+	- Three people front
+		- Uriah - FE
+		- Andrew - FE
+		- Chris - FE
+	- Two people back
+		- Teresa - BE, Maven, Jenkins
+		- Kevin - BE, Log4j, JUnit
+FE Technologies:
+- Angular, JS, HTML, CSS
+- 
+
+BE Technologies:
+- DB: Hibernate, Postgres, 
+- Deployment:
+- VM: EC2
+	* Teresa will deploy on personal account
+	* will need to give each member of the group admin permissions
+	* Andrew: can open the connection to everybody	
+- Version Control: GIT
+
+Project:
+- Priorities - 10 user stories
+	- MVP
+- https://rapidapi.com/collection/list-of-free-apis
+
+Ideas:
+- An app to collect data from Andrews API
+- 
+
+Chris:
+	- Use the skyscanner api to get flights based on travel interests, general interests
+	- Perhaps this can extract information based on Twitter posts
+
+Kevin:
+	-Weather app: can view weather based on region, users can discuss it, moderators/admin can edit discussion and post new topics
+	-Crypto currency tracking: list prices of various crypto, users discuss based on specific crypto
+
+URIAH:
+	- https://apod.nasa.gov/apod/astropix.html - astronomy picture of the day api; users can view the current day's potd, view past potd's, start discussions about a particular potd, favorite a certain potd, create albums, share albums, rate pictures, etc.
+	- https://api.nasa.gov/ here's the site for the api resource
+	- DEMO Keys: https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
+
+USER Stories:
+	1. Login
+	2. Logout
+	3. Getting the photo of the day
+	4. Viewing past photos
+	5. Search for keywords/ descriptions
+	6. Filter photos based on a range
+	7. Return random picture
+	8. Favorite images
+	9. Tag photos
+	
+

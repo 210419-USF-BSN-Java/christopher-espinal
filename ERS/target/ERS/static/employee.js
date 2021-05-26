@@ -224,11 +224,7 @@ function getUserInfo() {
 
     let tableBody = getAndCleanTableBody("currentAccountInfoTable");
 
-    // HARDCODED
-    let userId = 1;
-
-    // HARDCODED
-    let url = 'http://localhost:8080/ERS/user/account/' + userId;
+    let url = 'http://localhost:8080/ERS/user/account';
 
     let empReimBtns = getDataAndPopulateTable(
         url,

@@ -82,18 +82,11 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 
 	@Override
 	public void viewEmployeeReims(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// TODO Auto-generated method stub
-
 		String path = request.getRequestURI().substring((request.getContextPath() + "/manager/employeeReims").length());
-		// PrintWriter pw = response.getWriter();
-		// since the user doesn't explicitly choose the id value, this shouldn't matter
 		Integer employeeId = Integer.parseInt(path.substring(1)); // must remove the forward slash
-		// pw.write("\nView employee reims method, passed id: " + employeeId + "\n");
 		User employee = us.getById(employeeId);
-
 		List<Reimbursement> employeeReims = ms.viewEmployeeReims(employee);
 		if (employeeReims == null) {
-			// pw.write("nada");
 			response.setStatus(404);
 		} else {
 			String json = om.writeValueAsString(employeeReims);
@@ -106,10 +99,6 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 
 	@Override
 	public void viewEmployees(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// TODO Auto-generated method stub
-		// List<User> employees = ms.viewAllEmployees();
-		// convert to JSON
-		// just to test the front end:
 		List<User> employees = ms.viewAllEmployees();
 		if (employees == null) {
 			response.setStatus(404);
@@ -117,35 +106,22 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 			response.setStatus(200);
 			ObjectMapper mapper = new ObjectMapper();
 			String json = mapper.writeValueAsString(employees);
-			// response.setHeader("employees", employeesJSON);
 			response.setHeader("Access-Control-Allow-Origin", "*");
 			response.getWriter().write(json);
 
 		}
 	}
 
-	@Override
+	@Override // HARDCODED - FIXED
 	public void acceptReim(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// TODO Auto-generated method stub
 
 		String path = request.getRequestURI().substring((request.getContextPath() + "/manager/acceptReim").length());
-		// PrintWriter pw = response.getWriter();
-		// since the user doesn't explicitly choose the id value, this shouldn't matter
 		Integer reimId = Integer.parseInt(path.substring(1)); // must remove the forward slash
-		// pw.write("\nView employee reims method, passed id: " + employeeId + "\n");
 		System.out.println(reimId);
 		Reimbursement reim = rm.getById(reimId);
-		// need to get the manager's details
-		// String token = request.getHeader("Authentication");
-		// String[] userData = token.split(":");
-		// Integer managerId = Integer.parseInt(userData[0]);
-		// User manager = us.getById(managerId);
-		User manager = us.getById(2);
-
+		User manager = us.getById(((User) request.getSession().getAttribute("user")).getId());
 		int affected = ms.manageReim(reim, manager, Status.APPROVED);
-
 		if (affected > 0) {
-			// pw.write("nada");
 			response.setStatus(200);
 		} else {
 			response.setStatus(400);
@@ -153,30 +129,18 @@ public class ManagerControllerImpl extends HttpServlet implements ManagerControl
 
 	}
 
-	@Override
+	@Override // HARDCODED - FIXED
 	public void rejectReim(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 
 		String path = request.getRequestURI().substring((request.getContextPath() + "/manager/rejectReim").length());
-		// PrintWriter pw = response.getWriter();
-		// since the user doesn't explicitly choose the id value, this shouldn't matter
 		Integer reimId = Integer.parseInt(path.substring(1)); // must remove the forward slash
-		// pw.write("\nView employee reims method, passed id: " + employeeId + "\n");
-		System.out.println(reimId);
 		Reimbursement reim = rm.getById(reimId);
-		// need to get the manager's details
-		// String token = request.getHeader("Authentication");
-		// String[] userData = token.split(":");
-
-		// !!!!HARD CODE!!!!
-		// Integer managerId = Integer.parseInt(userData[0]);
-		// User manager = us.getById(managerId);
-		User manager = us.getById(2);
+		User manager = us.getById(((User) request.getSession().getAttribute("user")).getId());
 
 		int affected = ms.manageReim(reim, manager, Status.DENIED);
 
 		if (affected > 0) {
-			// pw.write("nada");
 			response.setStatus(200);
 		} else {
 			response.setStatus(400);

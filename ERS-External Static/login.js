@@ -1,34 +1,30 @@
-document.getElementById("loginForm").addEventListener("submit", (event) => fetchLogin(event));
+document.getElementById("loginForm").addEventListener("submit", fetchLogin);
 
-function fetchLogin(event) {
-    event.preventDefault();
-    alert("Welcome to the Login Page!");
-    console.log("Reached Beginning of Fetch Login");
-    // console.log(obj);
+function fetchLogin() {
     let form = document.getElementById("loginForm")
     let _user = {
         "username": form.elements['username'].value,
         "password": form.elements['password'].value,
     }
-
+    console.log(_user);
     let url = "http://localhost:8080/ERS/user/login";
 
-    let response = fetch(url, {
+    let status = fetch(url, {
         method: "POST",
         body: JSON.stringify(_user),
         headers: {
             mode: "cors",
         }
-    }).then((response) => {
-        if ((response.status < 300) && (response.status >= 200)) {
-            console.log("logged in!!");
-            window.location.href = "http://localhost:8080/ERS/manager";
-        } else {
-            document.getElementById("message").innerHTML = "Please Try Again!";
-        }
-    }).catch(e => log.error(e));
+    }).then(response => {
+        console.log("STEP 2");
+        return response.status;
+    }).catch(e => console.error(e));
 
-
+    if (status >= 200 && status < 300) {
+        console.log("reached redirect");
+        console.log(status);
+        window.location.href = "http://localhost:8080/ERS/manager";
+    }
 }
 
 

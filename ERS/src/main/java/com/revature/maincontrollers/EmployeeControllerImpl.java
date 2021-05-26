@@ -50,10 +50,9 @@ public class EmployeeControllerImpl implements EmployeeController {
         }
 
         // HARDCODED
-        User employee = us.getById(1);
+        User employee = us.getById(((User) request.getSession().getAttribute("user")).getId());
 
-        System.out.println("StringBuilder data: " + sb.toString());
-
+        // System.out.println("StringBuilder data: " + sb.toString());
         ObjectMapper om = new ObjectMapper();
         Reim reimJSON = om.readValue(sb.toString(), Reim.class);
 
@@ -78,7 +77,6 @@ public class EmployeeControllerImpl implements EmployeeController {
         }
 
         reim = es.submitReim(reim);
-        // System.out.println(reim);
         response.setStatus(200);
     }
 
@@ -86,7 +84,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     public void viewPendingReims(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // TODO Auto-generated method stub
 
-        User employee = us.getById(1);
+        User employee = us.getById(((User) request.getSession().getAttribute("user")).getId());
         List<Reimbursement> reims = es.getPendingReims(employee);
         if (reims == null) {
             // pw.write("nada");
@@ -105,7 +103,7 @@ public class EmployeeControllerImpl implements EmployeeController {
         // TODO Auto-generated method stub
 
         // HARDCODED - should get token for this
-        User employee = us.getById(1);
+        User employee = us.getById(((User) request.getSession().getAttribute("user")).getId());
         List<Reimbursement> reims = es.getResolvedReims(employee);
         if (reims == null) {
             // pw.write("nada");
@@ -119,7 +117,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     }
 
-    @Override
+    @Override  // mot in use - go to USER CONTROLLER FOR EMPLOYEE UPDATE CODE
     public void updateAccountInfo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // TODO Auto-generated method stub
         StringBuilder sb = new StringBuilder();
@@ -133,8 +131,8 @@ public class EmployeeControllerImpl implements EmployeeController {
             reader.close();
         }
 
-        // HARDCODED
-        User employee = us.getById(1);
+        // HARDCODED - FIXED
+        User employee = us.getById(((User) request.getSession().getAttribute("user")).getId());
 
         ObjectMapper om = new ObjectMapper();
         User userJSON = om.readValue(sb.toString(), User.class);

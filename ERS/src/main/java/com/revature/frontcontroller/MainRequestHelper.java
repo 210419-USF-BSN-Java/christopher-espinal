@@ -21,30 +21,30 @@ public class MainRequestHelper {
 			throws IOException, ServletException {
 		// this should direct it to the appropriate place
 		// will get a URI
+		System.out.println("NEWEST SYSTEM UPDATE - MAIN REQUEST HELPER");
 
 		String path = request.getRequestURI().substring(request.getContextPath().length());
-		PrintWriter pw = response.getWriter();
-		// pw.write("<h1> Reached Main Request Helper </h1>");
-		// user
-		// session - if there's no session then move to register or login
 		HttpSession session = request.getSession(false);
 
-		/*
-		 * if (path.startsWith("/user")) { // i want to redirect this login
-		 * UserFrontController.process(request, response); } else if
-		 * (session.getAttribute("role") == "employee") {
-		 * pw.write("<h2> Reached Employee Dashboard </h2>"); } else if
-		 * (session.getAttribute("role") == "manager") {
-		 * pw.write("<h2> Reached Manager Dashboard </h2>"); }
-		 */
-
 		if (path.startsWith("/user")) {
-			// i want to redirect this login
 			UserFrontController.process(request, response);
 		} else if (path.startsWith("/employee")) {
 			EmployeeFrontController.getInstance().process(request, response);
 		} else if (path.startsWith("/manager")) {
-			ManagerFrontController.getInstance().process(request, response);
+			String role = (String) session.getAttribute("role");
+			switch (role) {
+				case "MANAGER":
+					ManagerFrontController.getInstance().process(request, response);
+					break;
+				case "EMPLOYEE":
+					// if an employee tries to access manager services it will automatically
+					// redirect
+					response.sendRedirect("/ERS/employee");// System.out.println("not in a dispatcher");
+					break;
+				default:
+					response.sendRedirect("/ERS");// System.out.println("not in a dispatcher");
+					break;
+			}
 		} else {
 			response.setStatus(404);
 		}

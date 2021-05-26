@@ -1,6 +1,12 @@
 package com.revature.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+import com.revature.models.Role;
+import com.revature.models.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,11 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import com.revature.dao.DaoFactory;
-import com.revature.dao.UserDao;
-import com.revature.models.Role;
-import com.revature.models.User;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserDaoTest {
@@ -64,6 +65,13 @@ public class UserDaoTest {
 	public void dTest() {
 		int affected = userDao.delete(user);
 		assertTrue(affected > 0);
+	}
+
+	@Test
+	public void eTest() {
+		List<User> users = userDao.getAll();
+		System.out.println(users);
+		assertTrue(users.size() == 3);
 	}
 
 }
