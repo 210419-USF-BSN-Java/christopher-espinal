@@ -28,7 +28,8 @@ public class UserControllerImpl implements UserController {
 	public static UserController getInstance() {
 		return uc;
 	}
-
+	// BETTER APPROACH - separate Authentication from these user features
+	// This approach will make it easier to manager who can see what
 	@Override
 	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// TODO Auto-generated method stub
@@ -57,16 +58,16 @@ public class UserControllerImpl implements UserController {
 				 * User user = us.loginByUsername(username, password);
 				 */
 
-				System.out.println("LATEST SYSTEM UPDATE - USER CONTROLLER IMPL");
+				System.out.println("WEDNESDAY - USER CONTROLLER IMPL");
 
 				HttpSession session = request.getSession(false);
 				String username = request.getParameter("username");
 				String password = request.getParameter("password");
 
 				// System.out.println("username: " + username + ": password: " + password);
-				User user = us.loginByUsername(username, password);
+				try {
+					User user = us.loginByUsername(username, password);
 
-				if (user != null) {
 					session = request.getSession();
 					session.setAttribute("role", user.getRole().toString());
 					session.setAttribute("user", user);
@@ -81,11 +82,11 @@ public class UserControllerImpl implements UserController {
 							response.sendRedirect("/ERS/employee");
 							break;
 						default:
-							System.out.println("NEWEST SYSTEM UPDATE - NON USER REDIRECT");
 							response.sendRedirect("/ERS");
 							break;
 					}
-				} else {
+
+				} catch (NullPointerException e) {
 					response.setStatus(401);
 				}
 				break;
@@ -125,7 +126,7 @@ public class UserControllerImpl implements UserController {
 			response.setStatus(404);
 		} else { // POOR CODING QUALITY
 			List<User> fakeArray = new ArrayList<>(); // not for iteration. Just for compatibility with JS Function
-													// which expects a list
+														// which expects a list
 			fakeArray.add(user);
 			String json = om.writeValueAsString(fakeArray);
 			response.getWriter().write(json);

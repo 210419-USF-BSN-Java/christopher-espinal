@@ -12,6 +12,8 @@ public class UserFrontController {
 
 	public static void process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+
+		System.out.println("FINAL SYSTEM UPDATE - USER REDIRECT");
 		String path = request.getRequestURI().substring((request.getContextPath() + "/user").length());
 		if (path.length() == -1) {
 		} else {

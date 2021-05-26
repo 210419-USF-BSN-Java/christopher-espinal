@@ -1,6 +1,7 @@
 document.getElementById("loginForm").addEventListener("submit", fetchLogin);
 
 function fetchLogin() {
+    alert("New Login!")
     let form = document.getElementById("loginForm")
     let _user = {
         "username": form.elements['username'].value,
@@ -16,9 +17,13 @@ function fetchLogin() {
             mode: "cors",
         }
     }).then(response => {
-        response.headers['ETag']
-
-        return response.json();
+        if (response.status < 300 && response.status >= 200) {
+            alert("Successfully Logged In! - New ");
+            return response;
+        } else {
+            document.getElementById("message").innerHTML = "Please Try Again!";
+            return window.location.replace(url);
+        }
     }).catch(e => console.error(e));
 }
 

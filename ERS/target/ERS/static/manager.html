@@ -9,8 +9,7 @@
 
     <!-- http://localhost:8080/ERS/user/login-->
     <nav class="buttons">
-        <button type="button" onclick="alert('Logged Out')" id="logout">Logout</button>
-        <button type="button" onclick="openView('accountInfo')" id="accountInfoBtn">Account Info</button>
+        <button type="button" id="logout">Logout</button>
         <button type="button" onclick="openView('pendingReims')" id="pendingReimsBtn">Pending Reimbursements</button>
         <button type="button" onclick="openView('seeAllEmployees')" id="seeAllEmployeesBtn">See All Employees</button>
         <button type="button" onclick="openView('resolvedReims')" id="resolvedReimsBtn">All Resolved
@@ -18,24 +17,6 @@
     </nav>
 
     <h1>Manager Dashboard</h1>
-
-    <div class="page" id="accountInfo" style="display:none">
-        <h3> Manager Account Info </h3>
-        <ul>
-            <li><label for="firstname">First Name:
-                </label>
-                <div id="firstname"></div>
-            </li>
-            <li><label for="lastname">Last Name:
-                </label>
-                <div id="lastname"></div>
-            </li>
-            <li><label for="username">User Name:
-                </label>
-                <div id="username"></div>
-            </li>
-        </ul>
-    </div>
 
     <div class="page" id="pendingReims" style="display:block">
         <h3> See All Pending Reimbursement Requests </h3>
@@ -80,7 +61,6 @@
         </table>
     </div>
 
-    <!-- button for this in seeAllEmployees! -->
     <div class="page" id="employeeReims" style="display:none">
         <h3> See Specific Employee Reimbursement Requests </h3>
         <table id="employeeReimsTable">
@@ -95,7 +75,7 @@
     </div>
 
     <div class="page" id="resolvedReims" style="display:none">
-        <h3> See All Pending Reimbursement Requests </h3>
+        <h3> See All Employee Reimbursement Requests </h3>
         <table id="resolvedReimsTable">
             <tr>
                 <th>Reim Id</th>

@@ -8,15 +8,58 @@ function openView(view) {
     document.getElementById(view).style.display = "block";
 }
 
-document.getElementById('accountInfoBtn').addEventListener('click', function () { alert("Getting Account Info") })
-
 document.getElementById('pendingReimsBtn').addEventListener('click', pendingReimsView);
 
-document.getElementById('logout').addEventListener('click', (event) => logout(event));
+document.getElementById('logout').addEventListener('click', logout);
+
+document.getElementById('seeAllEmployeesBtn').addEventListener('click', function () {
+    let tableBody = getAndCleanTableBody("allEmployeesTable");
+
+    let url = 'http://localhost:8080/ERS/manager/allEmployees';
+
+    let employeeBtns = getDataAndPopulateTable(
+        url,
+        tableBody,
+        "employee",
+        "See Details",
+        getEmployeeItem,
+    );
+    /*     url,
+            tableBody,
+            itemName,
+            action,
+            btnCallable,
+            secondButton = false,
+            action2 = "",
+            secondBtnCallable = ""
+         */
+});
+
+document.getElementById('resolvedReimsBtn').addEventListener('click', function () {
+    let tableBody = getAndCleanTableBody("resolvedReimsTable");
+
+    let url = 'http://localhost:8080/ERS/manager/resolvedReims';
+
+    let employeeBtns = getDataAndPopulateTable(
+        url,
+        tableBody,
+        "resolvedReim", // item anem
+        "Cool!", // action name in string
+        function () { alert("Cool!") }, // btn callable
+    );
+    /*     url,
+            tableBody,
+            itemName,
+            action,
+            btnCallable,
+            secondButton = false,
+            action2 = "",
+            secondBtnCallable = ""
+         */
+});
 
 function logout(event) {
     event.preventDefault();
-    alert("Logging Out");
     let url = "http://localhost:8080/ERS/user/logout";
 
     let response = fetch(
@@ -28,10 +71,12 @@ function logout(event) {
             },
         }
     ).then((response) => {
-        if ((response.status < 300) && (response.status >= 200)) {
-            console.log("logged out!!");
-            window.location.href = "http://localhost:8080/ERS/user/login";
+        if (response.ok) {
+            sessionStorage.clear;
+            alert("new logged out!!");
+            return window.location.replace("http://localhost:8080/ERS/user/login");
         }
+
     }
     ).catch(e => console.error(e))
 }
@@ -67,7 +112,6 @@ function pendingReimsView() {
 
 // when figure out CORS issues and token issue, can send token here as well
 function accept() {
-    alert("accepted");
     let id = event.target.id;
     let url = "http://localhost:8080/ERS/manager/acceptReim/" + id;
     let status = fetch(url, {
@@ -76,14 +120,15 @@ function accept() {
         mode: "cors",
 
     }).then((response) => {
-        console.log(response.status);
+        if (response.ok) {
+            alert("Submission Successful!");
+        }
         return pendingReimsView();
     }).catch((error) => console.log(error));
     return status;
 }
 
 function reject() {
-    alert("rejected");
     let id = event.target.id;
     let url = "http://localhost:8080/ERS/manager/rejectReim/" + id;
     let status = fetch(url, {
@@ -92,36 +137,14 @@ function reject() {
         mode: "cors",
 
     }).then((response) => {
-        console.log(response.status);
-        return pendingReimsView();
+        if (response.okay) {
+            alert("Rejection Successful!");
+        }
+        return pendingReimsView;
     }
     ).catch((error) => console.log(error));
     return status;
 }
-
-
-document.getElementById('seeAllEmployeesBtn').addEventListener('click', function () {
-    let tableBody = getAndCleanTableBody("allEmployeesTable");
-
-    let url = 'http://localhost:8080/ERS/manager/allEmployees';
-
-    let employeeBtns = getDataAndPopulateTable(
-        url,
-        tableBody,
-        "employee",
-        "See Details",
-        getEmployeeItem,
-    );
-    /*     url,
-            tableBody,
-            itemName,
-            action,
-            btnCallable,
-            secondButton = false,
-            action2 = "",
-            secondBtnCallable = ""
-         */
-});
 
 // used as a callable
 function getEmployeeItem() {
@@ -156,29 +179,6 @@ function getEmployeeItem() {
 
 };
 
-document.getElementById('resolvedReimsBtn').addEventListener('click', function () {
-    let tableBody = getAndCleanTableBody("resolvedReimsTable");
-
-    let url = 'http://localhost:8080/ERS/manager/resolvedReims';
-
-    let employeeBtns = getDataAndPopulateTable(
-        url,
-        tableBody,
-        "resolvedReim", // item anem
-        "Cool!", // action name in string
-        function () { alert("Cool!") }, // btn callable
-    );
-    /*     url,
-            tableBody,
-            itemName,
-            action,
-            btnCallable,
-            secondButton = false,
-            action2 = "",
-            secondBtnCallable = ""
-         */
-});
-
 // step 1
 function getAndCleanTableBody(tableId) {
     // alert("Getting All Employees");
@@ -204,7 +204,8 @@ function getAndCleanTableBody(tableId) {
 
 // step 2
 // also returns buttons with information
-function getDataAndPopulateTable(url,
+function getDataAndPopulateTable(
+    url,
     tableBody,
     itemName,
     action,
@@ -307,7 +308,7 @@ function populateTable(
         itemBtnsClassName = `${action}${itemName}Btns`;
 
         btn.setAttribute("class", itemBtnsClassName);
-        btn.innerHTML = "Select";
+        btn.innerHTML = action;
 
         btn.addEventListener('click', btnCallable);
         btnCell.appendChild(btn);

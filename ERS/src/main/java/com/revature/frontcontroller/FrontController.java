@@ -12,7 +12,6 @@ public class FrontController extends DefaultServlet {
 	/**
 	 * 
 	 */
-	// checks to see if TOMCAT successfully reloaded
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -20,7 +19,7 @@ public class FrontController extends DefaultServlet {
 		
 		// get the uri and figure out where it's going
 		// context path would be
-		System.out.println("LAST SYSTEM UPDATE - FRONT CONTROLLER");
+		System.out.println("WEDNESDAY - FRONT CONTROLLER");
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 
 		if (path.startsWith("/static/") || path.equals("") || path.equals("/") || path.equals("/index.html")) {

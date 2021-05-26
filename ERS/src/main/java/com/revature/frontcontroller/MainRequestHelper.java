@@ -1,7 +1,6 @@
 package com.revature.frontcontroller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ public class MainRequestHelper {
 			throws IOException, ServletException {
 		// this should direct it to the appropriate place
 		// will get a URI
-		System.out.println("NEWEST SYSTEM UPDATE - MAIN REQUEST HELPER");
+		System.out.println("WEDNESDAY - FRONT CONTROLLER");
 
 		String path = request.getRequestURI().substring(request.getContextPath().length());
 		HttpSession session = request.getSession(false);
@@ -47,6 +46,7 @@ public class MainRequestHelper {
 			}
 		} else {
 			response.setStatus(404);
+			response.sendRedirect("/ERS");
 		}
 
 	}

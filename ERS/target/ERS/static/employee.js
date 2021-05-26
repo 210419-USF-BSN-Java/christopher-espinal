@@ -74,7 +74,12 @@ function submitReim(event) {
                 "mode": "core",
             },
         }
-    ).then(response => console.log(response.status))
+    ).then(response => {
+        if (response.ok) {
+            alert("Successful!");
+        }
+        return pendingReimsView();
+    })
         .catch(e => console.error(e))
 
 }
@@ -180,40 +185,6 @@ function pendingReimsView() {
         secondBtnCallable = ""
      */
 
-}
-
-// when figure out CORS issues and token issue, can send token here as well
-function accept() {
-    alert("accepted");
-    let id = event.target.id;
-    let url = "http://localhost:8080/ERS/manager/acceptReim/" + id;
-    let status = fetch(url, {
-
-        method: "GET",
-        mode: "cors",
-
-    }).then((response) => {
-        console.log(response.status);
-        return pendingReimsView();
-    }).catch((error) => console.log(error));
-    return status;
-}
-
-function reject() {
-    alert("rejected");
-    let id = event.target.id;
-    let url = "http://localhost:8080/ERS/manager/rejectReim/" + id;
-    let status = fetch(url, {
-
-        method: "GET",
-        mode: "cors",
-
-    }).then((response) => {
-        console.log(response.status);
-        return pendingReimsView();
-    }
-    ).catch((error) => console.log(error));
-    return status;
 }
 
 // can be modeled for url rewriting purposes
